@@ -1,0 +1,31 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout # Rollout으로 생성
+metadata:
+  name: itopw-front
+  namespace: itopw
+  labels:
+    app: itopw-front
+spec:
+  replicas: 2
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      app: itopw-front
+  template:
+    metadata:
+      labels:
+        app: itopw-front
+    spec:
+      containers:
+      - name: itopw-front
+        image: dialee/itopw-fe:1.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+  strategy:
+    canary:
+      maxSurge: "100%"    # canary 배포로 생성할 pod의 비율
+      maxUnavailable: 0  # 업데이트 될 때 사용할 수 없는 pod의 최대 수
+      steps:
+      - setWeight: 100    # 카나리로 배포된 서버로 전송해야될 트래픽 비율
+      - pause: { duration: 30m }
