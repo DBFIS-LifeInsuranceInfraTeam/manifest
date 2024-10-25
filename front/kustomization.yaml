@@ -5,4 +5,4 @@ resources:
 kind: Kustomization
 images:
 - name: dialee/itopw-front
-  newTag: v0.0.2-refs-tags-v0-0-2-refs-tags-v0-0-2-refs-tags-v0-0-2-refs-tags-v0-0-2-refs-tags-v0-0-2-refs-tags-v0-0-1-0-0-0-0-0.0
+  newTag: v0.0.4-v0-0-3.0
