@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: itopw-front
-        image: dialee/itopw-fe:1.0
+        image: dialee/itopw-front:v0.0.1
         imagePullPolicy: Always
         ports:
         - containerPort: 80
