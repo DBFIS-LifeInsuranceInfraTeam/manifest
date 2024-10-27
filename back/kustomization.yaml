@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- itopw-back-deploy.yaml
+- itopw-back-svc.yaml
+- itopw-back-cm.yaml
+- itopw-back-secret.yaml
+images:
+- name: dialee/itopw-back
+  newTag: v0.0.0
