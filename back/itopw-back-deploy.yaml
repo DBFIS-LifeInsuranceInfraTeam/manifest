@@ -1,0 +1,94 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: itopw-deploy-hpa
+  namespace: itopw
+spec:
+  maxReplicas: 3
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: argoproj.io/v1alpha1
+    kind: Rollout # Rollout으로 생성
+    name: itopw-back-deploy
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 80
+status:
+  currentReplicas: 2
+  desiredReplicas: 2
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout # Rollout으로 생성
+metadata:
+  labels:
+    app: itopw-back
+  name: itopw-back-deploy
+  namespace: itopw
+spec:
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: itopw-back
+  template:
+    metadata:
+      labels:
+        app: itopw-back
+    spec:
+      containers:
+      - env:
+        - name: SERVER_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: itopw-back-cm
+              key: SERVER_PORT
+        - name: SPRING_DATASOURCE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: itopw-back-cm
+              key: SPRING_DATASOURCE_URL
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: itopw-back-cm
+              key: SPRING_DATASOURCE_USERNAME
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: itopw-back-cm
+              key: SPRING_DATASOURCE_PASSWORD
+        - name: PRIVATE_KEY
+          valueFrom:
+            secretKeyRef:
+              name: itopw-back-secret
+              key: PRIVATE_KEY
+        image: dialee/itopw-back:v0.0.0
+        name: itopw-back
+        ports:
+        - containerPort: 8081
+          name: itopw-back
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1000M
+          requests:
+            cpu: 400m
+            memory: 500M
+        volumeMounts:
+        - name: tz-seoul
+          mountPath: /etc/localtime
+      volumes:
+      - name: tz-seoul
+        hostPath:
+          path: /usr/share/zoneinfo/Asia/Seoul
+      restartPolicy: Always
+  strategy:
+    canary:
+      maxSurge: "100%"    # canary 배포로 생성할 pod의 비율
+      maxUnavailable: 0  # 업데이트 될 때 사용할 수 없는 pod의 최대 수
+      steps:
+      - setWeight: 100    # 카나리로 배포된 서버로 전송해야될 트래픽 비율
+      - pause: { dura
