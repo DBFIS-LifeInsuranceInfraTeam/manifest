@@ -22,6 +22,9 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 80
+        env:
+        - name: REACT_APP_BASE_URL
+          value: http://itopw-back-svc:8080
   strategy:
     canary:
       maxSurge: "100%"    # canary 배포로 생성할 pod의 비율
