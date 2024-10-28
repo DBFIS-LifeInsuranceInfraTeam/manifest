@@ -27,9 +27,6 @@ spec:
           subPath: default.conf
           readOnly: true
           name: itopw-front-cm
-        env:
-        - name: REACT_APP_BASE_URL
-          value: http://itopw-back-svc:8080
       volumes:
       - name: itopw-front-cm
         configMap:
