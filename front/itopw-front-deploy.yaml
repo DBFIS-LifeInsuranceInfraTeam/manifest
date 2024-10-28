@@ -30,6 +30,10 @@ spec:
         #env:
         #- name: REACT_APP_BASE_URL
         #  value: 
+      volumes:
+      - name: itopw-front-cm
+        configMap:
+          name: itopw-front-cm
   strategy:
     canary:
       maxSurge: "100%"    # canary 배포로 생성할 pod의 비율
