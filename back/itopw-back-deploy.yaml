@@ -45,26 +45,21 @@ spec:
             configMapKeyRef:
               name: itopw-back-cm
               key: SERVER_PORT
-        - name: SPRING_DATASOURCE_URL
-          valueFrom:
-            configMapKeyRef:
-              name: itopw-back-cm
-              key: SPRING_DATASOURCE_URL
         - name: SPRING_DATASOURCE_USERNAME
           valueFrom:
             configMapKeyRef:
               name: itopw-back-cm
               key: SPRING_DATASOURCE_USERNAME
-        - name: SPRING_DATASOURCE_PASSWORD
-          valueFrom:
-            configMapKeyRef:
-              name: itopw-back-cm
-              key: SPRING_DATASOURCE_PASSWORD
-        - name: PRIVATE_KEY
+        - name: SPRING_DATASOURCE_URL
           valueFrom:
             secretKeyRef:
               name: itopw-back-secret
-              key: PRIVATE_KEY
+              key: SPRING_DATASOURCE_URL
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: itopw-back-secret
+              key: SPRING_DATASOURCE_PASSWORD
         image: dialee/itopw-back:v0.0.0
         name: itopw-back
         ports:
@@ -91,4 +86,4 @@ spec:
       maxUnavailable: 0  # 업데이트 될 때 사용할 수 없는 pod의 최대 수
       steps:
       - setWeight: 100    # 카나리로 배포된 서버로 전송해야될 트래픽 비율
-      - pause: { dura
+      - pause: { duration: 10m }        # AutoPromotion Time (하단 설명 참조)
