@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    type: db
+  name: itopw-db
+  namespace: itopw
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      type: db
+  template:
+    metadata:
+      labels:
+        type: db
+    spec:
+      containers:
+      - image: postgres:15
+        name: itopw-db
+        env:
+        - name: POSTGRES_DB
+          value: itopw
+        - name: POSTGRES_USER
+          value: itopw
+        - name: POSTGRES_PASSWORD
+          value: 30c+rnfjddl
+        ports:
+        - containerPort: 5432
+          name: itopw-db
+        volumeMounts:
+        - name: tz-seoul
+          mountPath: /etc/localtime
+      volumes:
+      - name: tz-seoul
+        hostPath:
+          path: /usr/share/zoneinfo/Asia/Seoul
