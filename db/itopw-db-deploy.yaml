@@ -42,4 +42,4 @@ spec:
           path: /usr/share/zoneinfo/Asia/Seoul
       - name: itopw-db-init-sql
         configMap:
-          name: itopw-db-init-sql
+          name: itopw-db-cm
