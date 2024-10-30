@@ -5,7 +5,7 @@ metadata:
   namespace: itopw
 data:
   init.sql: |
-    CREATE TABLE TASK (
+    CREATE TABLE task (
       task_id SERIAL PRIMARY KEY,
       project_id INTEGER NOT NULL,
       task_name TEXT NOT NULL,
@@ -21,14 +21,14 @@ data:
       assignee_confirmation JSONB[]
     );
 
-    CREATE TABLE NOTIFICATION (
+    CREATE TABLE notification (
       notify_id SERIAL PRIMARY KEY,
       email TEXT NOT NULL,
       due_date DATE,
       task_id INTEGER NOT NULL
     );
 
-    CREATE TABLE COMMENT (
+    CREATE TABLE comment (
       comment_id SERIAL PRIMARY KEY,
       task_id INTEGER NOT NULL,
       comment TEXT NOT NULL,
@@ -37,7 +37,7 @@ data:
       create_date DATE NOT NULL
     );
 
-    CREATE TABLE "USER" (
+    CREATE TABLE user (
       user_id TEXT PRIMARY KEY,
       password TEXT NOT NULL,
       name TEXT NOT NULL,
@@ -50,7 +50,7 @@ data:
       admin BOOLEAN NOT NULL
     );
 
-    CREATE TABLE PROJECT (
+    CREATE TABLE project (
       project_id SERIAL PRIMARY KEY,
       name TEXT NOT NULL,
       description TEXT,
@@ -59,13 +59,13 @@ data:
       smtp_pw TEXT
     );
 
-    CREATE TABLE ITOPROCESS (
+    CREATE TABLE itoprocess (
       process_id SERIAL PRIMARY KEY,
       name TEXT NOT NULL,
       description TEXT
     );
 
-    CREATE TABLE STATISTICS_VIEW (
+    CREATE TABLE statistics_view (
       statistics_id SERIAL PRIMARY KEY,
       project_id INTEGER NOT NULL,
       before INTEGER DEFAULT 0 NOT NULL,
@@ -74,7 +74,7 @@ data:
       pending INTEGER DEFAULT 0 NOT NULL
     );
 
-    CREATE TABLE FREQUENCY (
+    CREATE TABLE frequency (
       frequency_id SERIAL PRIMARY KEY,
       type TEXT NOT NULL DEFAULT 'week',
       detail TEXT NOT NULL
