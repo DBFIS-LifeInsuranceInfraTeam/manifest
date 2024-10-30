@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: itopw-db-cm
+  namespace: itopw
+data:
+  init.sql: |
+    -- Create `user` table
+    CREATE TABLE IF NOT EXISTS "user" (
+        user_id TEXT PRIMARY KEY,
+        password TEXT NOT NULL,
+        name TEXT NOT NULL,
+        unit TEXT NOT NULL,
+        project_id INTEGER NOT NULL,
+        email TEXT NOT NULL,
+        phone_number TEXT NOT NULL,
+        photo TEXT,
+        position TEXT NOT NULL,
+        admin BOOLEAN NOT NULL
+    );
+
+    -- Create `task` table
+    CREATE TABLE IF NOT EXISTS task (
+        task_id INTEGER PRIMARY KEY,
+        project_id INTEGER NOT NULL,
+        task_name TEXT NOT NULL,
+        description TEXT,
+        assignee_id TEXT NOT NULL REFERENCES "user"(user_id),
+        created_date DATE NOT NULL,
+        start_date DATE NOT NULL,
+        due_date DATE,
+        frequency_id INTEGER,
+        comment_count INTEGER,
+        status INTEGER NOT NULL,
+        ito_process_id INTEGER NOT NULL,
+        assignee_confirmation TEXT NOT NULL
+    );
