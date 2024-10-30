@@ -33,7 +33,13 @@ spec:
         volumeMounts:
         - name: tz-seoul
           mountPath: /etc/localtime
+        - name: itopw-db-init-sql
+          mountPath: /docker-entrypoint-initdb.d/init.sql
+          subPath: init.sql
       volumes:
       - name: tz-seoul
         hostPath:
           path: /usr/share/zoneinfo/Asia/Seoul
+      - name: itopw-db-init-sql
+        configMap:
+          name: itopw-db-init-sql
