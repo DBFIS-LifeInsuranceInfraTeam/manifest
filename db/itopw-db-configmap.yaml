@@ -33,7 +33,7 @@ data:
       task_id INTEGER NOT NULL,
       comment TEXT NOT NULL,
       user_id INTEGER NOT NULL,
-      like INTEGER DEFAULT 0,
+      like_count INTEGER DEFAULT 0,
       create_date DATE NOT NULL
     );
 
