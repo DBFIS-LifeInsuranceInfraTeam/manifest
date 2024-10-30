@@ -37,7 +37,7 @@ data:
       create_date DATE NOT NULL
     );
 
-    CREATE TABLE USER (
+    CREATE TABLE "USER" (
       user_id TEXT PRIMARY KEY,
       password TEXT NOT NULL,
       name TEXT NOT NULL,
