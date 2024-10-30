@@ -1,0 +1,81 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: itopw-db-cm
+  namespace: itopw
+data:
+  init.sql: |
+    CREATE TABLE TASK (
+      task_id SERIAL PRIMARY KEY,
+      project_id INTEGER NOT NULL,
+      task_name TEXT NOT NULL,
+      description TEXT,
+      assignee_id TEXT[] NOT NULL,
+      created_date DATE NOT NULL,
+      start_date DATE NOT NULL,
+      due_date DATE,
+      frequency_id INTEGER,
+      comment_count INTEGER DEFAULT 0,
+      status INTEGER NOT NULL,
+      ito_process_id INTEGER NOT NULL,
+      assignee_confirmation JSONB[]
+    );
+
+    CREATE TABLE NOTIFICATION (
+      notify_id SERIAL PRIMARY KEY,
+      email TEXT NOT NULL,
+      due_date DATE,
+      task_id INTEGER NOT NULL
+    );
+
+    CREATE TABLE COMMENT (
+      comment_id SERIAL PRIMARY KEY,
+      task_id INTEGER NOT NULL,
+      comment TEXT NOT NULL,
+      user_id INTEGER NOT NULL,
+      like INTEGER DEFAULT 0,
+      create_date DATE NOT NULL
+    );
+
+    CREATE TABLE USER (
+      user_id TEXT PRIMARY KEY,
+      password TEXT NOT NULL,
+      name TEXT NOT NULL,
+      unit TEXT NOT NULL,
+      project_id INTEGER NOT NULL,
+      email TEXT NOT NULL,
+      phone_number TEXT,
+      photo TEXT,
+      position TEXT NOT NULL,
+      admin BOOLEAN NOT NULL
+    );
+
+    CREATE TABLE PROJECT (
+      project_id SERIAL PRIMARY KEY,
+      name TEXT NOT NULL,
+      description TEXT,
+      smtp_url TEXT,
+      smtp_id TEXT,
+      smtp_pw TEXT
+    );
+
+    CREATE TABLE ITOPROCESS (
+      process_id SERIAL PRIMARY KEY,
+      name TEXT NOT NULL,
+      description TEXT
+    );
+
+    CREATE TABLE STATISTICS_VIEW (
+      statistics_id SERIAL PRIMARY KEY,
+      project_id INTEGER NOT NULL,
+      before INTEGER DEFAULT 0 NOT NULL,
+      progress INTEGER DEFAULT 0 NOT NULL,
+      complete INTEGER DEFAULT 0 NOT NULL,
+      pending INTEGER DEFAULT 0 NOT NULL
+    );
+
+    CREATE TABLE FREQUENCY (
+      frequency_id SERIAL PRIMARY KEY,
+      type TEXT NOT NULL DEFAULT 'week',
+      detail TEXT NOT NULL
+    );
