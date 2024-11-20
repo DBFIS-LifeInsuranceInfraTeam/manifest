@@ -39,7 +39,8 @@ data:
             proxy_set_header Host $host;
             proxy_set_header X-Real-IP $remote_addr;
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-            alias /app/images/uploads/profile-images; # 백엔드의 /app/images 경로를 사용
+            root /app; # 이 경로는 /app/images/uploads/profile-images/로 매핑
+            #alias /app/images/uploads/profile-images; # 백엔드의 /app/images 경로를 사용
             autoindex on; # 디렉터리 브라우징 활성화 (옵션)
             types {
                 image/png png;
