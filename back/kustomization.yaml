@@ -8,4 +8,4 @@ resources:
 - itopw-back-pv.yaml
 images:
 - name: dialee/itopw-back
-  newTag: v0.0.60
+  newTag: v0.0.61
