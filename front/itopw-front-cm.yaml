@@ -34,6 +34,7 @@ data:
         }
 
         location /images/uploads/profile-images {
+            default_type image/png; # Content-Type 설정 (옵션)
             proxy_pass http://itopw-back-svc:8080;
             proxy_set_header Host $host;
             proxy_set_header X-Real-IP $remote_addr;
@@ -47,6 +48,8 @@ data:
                 image/svg+xml svg;
             }
         }
+
+        
 
         
         error_page   500 502 503 504  /50x.html;
