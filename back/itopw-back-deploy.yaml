@@ -75,10 +75,15 @@ spec:
         volumeMounts:
         - name: tz-seoul
           mountPath: /etc/localtime
+        - name: itopw-back-volume
+          mountPath: /app/uploads/profile-images
       volumes:
       - name: tz-seoul
         hostPath:
           path: /usr/share/zoneinfo/Asia/Seoul
+      - name: itopw-back-volume
+        persistentVolumeClaim:
+          claimName: itopw-back-pvc
       restartPolicy: Always
   strategy:
     canary:
