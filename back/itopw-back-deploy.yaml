@@ -76,7 +76,7 @@ spec:
         - name: tz-seoul
           mountPath: /etc/localtime
         - name: itopw-back-volume
-          mountPath: /app/uploads/profile-images
+          mountPath: /app/images/uploads/profile-images
       volumes:
       - name: tz-seoul
         hostPath:
