@@ -5,6 +5,7 @@ resources:
 - itopw-back-svc.yaml
 - itopw-back-cm.yaml
 - itopw-back-secret.yaml
+- itopw-back-pv.yaml
 images:
 - name: dialee/itopw-back
   newTag: v0.0.55
