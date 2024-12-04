@@ -45,6 +45,21 @@ spec:
             configMapKeyRef:
               name: itopw-back-cm
               key: SERVER_PORT
+        - name: SPRING_MAIL_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              name: itopw-back-cm
+              key: SPRING_MAIL_USERNAME
+        - name: SPRING_MAIL_HOST
+          valueFrom:
+            configMapKeyRef:
+              name: itopw-back-cm
+              key: SPRING_MAIL_HOST
+        - name: SPRING_MAIL_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: itopw-back-cm
+              key: SPRING_MAIL_PORT
         - name: SPRING_DATASOURCE_USERNAME
           valueFrom:
             configMapKeyRef:
@@ -55,6 +70,11 @@ spec:
             secretKeyRef:
               name: itopw-back-secret
               key: SPRING_DATASOURCE_URL
+        - name: SPRING_MAIL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: itopw-back-secret
+              key: SPRING_MAIL_PASSWORD
         - name: SPRING_DATASOURCE_PASSWORD
           valueFrom:
             secretKeyRef:
