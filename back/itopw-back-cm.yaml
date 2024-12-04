@@ -6,3 +6,6 @@ metadata:
 data:
   SERVER_PORT: "8080"
   SPRING_DATASOURCE_USERNAME: itopw
+  SPRING_MAIL_USERNAME: "db.itopw@gmail.com"
+  SPRING_MAIL_HOST: "smtp.gmail.com"
+  SPRING_MAIL_PORT: "587"
