@@ -4,7 +4,7 @@ metadata:
   name: itopw-deploy-hpa
   namespace: itopw
 spec:
-  maxReplicas: 3
+  maxReplicas: 10
   minReplicas: 1
   scaleTargetRef:
     apiVersion: argoproj.io/v1alpha1
@@ -17,6 +17,12 @@ spec:
       target:
         type: Utilization
         averageUtilization: 80
+  - type: Resource
+  resource:
+    name: memory
+    target:
+      type: Utilization
+      averageUtilization: 70
 status:
   currentReplicas: 2
   desiredReplicas: 2
@@ -87,11 +93,11 @@ spec:
           name: itopw-back
         resources:
           limits:
-            cpu: 1000m
-            memory: 1000M
+            cpu: 800m
+            memory: 800M
           requests:
-            cpu: 400m
-            memory: 500M
+            cpu: 500m
+            memory: 600M
         volumeMounts:
         - name: tz-seoul
           mountPath: /etc/localtime
@@ -110,5 +116,8 @@ spec:
       maxSurge: "100%"    # canary 배포로 생성할 pod의 비율
       maxUnavailable: 0  # 업데이트 될 때 사용할 수 없는 pod의 최대 수
       steps:
-      - setWeight: 100    # 카나리로 배포된 서버로 전송해야될 트래픽 비율
-      - pause: { duration: 10m }        # AutoPromotion Time (하단 설명 참조)
+      - setWeight: 25  # 첫 번째 단계에서 25% 트래픽 전송
+      - pause: { duration: 10m }
+      - setWeight: 50  # 두 번째 단계에서 50% 트래픽 전송
+      - pause: { duration: 10m }
+      - setWeight: 100 # 마지막 단계에서 100% 트래픽 전송
